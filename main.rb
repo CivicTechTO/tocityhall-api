@@ -1,4 +1,4 @@
 class ApiApp < Grape::API
-  mount ApiV1
+  mount ApiV0
 end
 

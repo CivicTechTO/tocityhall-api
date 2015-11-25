@@ -1,4 +1,4 @@
-module V1Helpers
+module V0Helpers
   def strip_uuid(ocd_uuid)
     ocd_uuid.split('/').last
   end

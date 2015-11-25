@@ -1,7 +1,7 @@
-class ApiV1 < Grape::API
-  version 'v1', using: :path
+class ApiV0 < Grape::API
+  version 'v0', using: :path
   format :json
-  helpers V1Helpers
+  helpers V0Helpers
   formatter :json, PrettyJSON
 
   include Grape::Kaminari

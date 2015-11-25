@@ -26,7 +26,7 @@ bundle exec rackup
 
 You should now be able to access the API at
 
-    http://localhost:9292/v1/
+    http://localhost:9292/v0/
 
 The current endpoints are:
 
@@ -41,3 +41,5 @@ GET /vote_events/:id
 
 There are 20 results per page, and you may paginate by adding the page
 query string.
+
+No guarantees of stability while the API is labelled as `v0`.
