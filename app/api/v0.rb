@@ -85,18 +85,20 @@ class ApiV0 < Grape::API
     end
   end
 
-  get :sessions do
-    LegislativeSession.in_toronto.limit(20)
+  get :legislative_sessions do
+    paginated = paginate_array(LegislativeSession.in_toronto)
+    leg_sessions_response paginated
   end
 
-  namespace :sessions do
+  namespace :legislative_sessions do
     route_param :id do
       get do
         LegislativeSession.find(params[:id])
       end
 
       get :bills do
-        LegislativeSession.find(params[:id]).bills.limit(20)
+        paginated = paginate_array(LegislativeSession.find(params[:id]).bills)
+        bills_response paginated
       end
     end
   end

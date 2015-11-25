@@ -73,11 +73,18 @@ module V0Helpers
     end
   end
 
-  def leg_session_response(leg_session)
+  def leg_session_response(session)
     {
-      id: leg_session.id,
-      name: leg_session.name,
+      id: session.id,
+      name: session.name,
+      jurisdiction_id: session.jurisdiction_id,
     }
+  end
+
+  def leg_sessions_response(sessions)
+    sessions.map do |session|
+      leg_session_response session
+    end
   end
 
 end

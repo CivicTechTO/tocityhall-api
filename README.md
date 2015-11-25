@@ -35,6 +35,9 @@ GET /councillors
 GET /councillors/:id
 GET /bills
 GET /bills/:id
+GET /legislative_session
+GET /legislative_session/:id
+GET /legislative_session/:id/bills
 GET /vote_events
 GET /vote_events/:id
 ```
