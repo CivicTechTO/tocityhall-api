@@ -33,14 +33,21 @@ The current endpoints are:
 ```
 GET /councillors
 GET /councillors/:id
+GET /councillors/:id/votes
+GET /councillors/:id/vote_events
 GET /bills
 GET /bills/:id
+GET /bills/:id/vote_events
+GET /bills/:id/councillors
+GET /bills/:id/votes
 GET /legislative_session
 GET /legislative_session/:id
 GET /legislative_session/:id/bills
 GET /legislative_session/:id/councillors **REALLY SLOW**
 GET /vote_events
 GET /vote_events/:id
+GET /vote_events/:id/votes
+GET /vote_events/:id/councillors
 GET /memberships
 GET /posts
 ```

@@ -8,14 +8,12 @@ class ApiV0 < Grape::API
 
   paginate per_page: 20, max_per_page: 100, offset: false
 
-  get :councillors do
-    people = Person.all
-    paginated_people = paginate(Kaminari.paginate_array(people))
-
-    councillors_response(paginated_people)
-  end
-
   namespace :councillors do
+    get do
+      paginated = paginate_array(Person.all)
+      councillors_response(paginated)
+    end
+
     route_param :id do
       get do
         councillor_response Person.find_by_uuid(params[:id])
@@ -31,13 +29,12 @@ class ApiV0 < Grape::API
     end
   end
 
-  get :vote_events do
-    paginated = paginate(Kaminari.paginate_array(VoteEvent.all))
-
-    vote_events_response(paginated)
-  end
-
   namespace :vote_events do
+    get do
+      paginated = paginate_array(VoteEvent.all)
+      vote_events_response(paginated)
+    end
+
     route_param :id do
       get do
         vote_event_response VoteEvent.find_by_uuid(params[:id])
@@ -59,13 +56,12 @@ class ApiV0 < Grape::API
     end
   end
 
-  get :bills do
-    paginated = paginate_array(Bill.in_toronto)
-
-    bills_response paginated
-  end
-
   namespace :bills do
+    get do
+      paginated = paginate_array(Bill.in_toronto)
+      bills_response paginated
+    end
+
     route_param :id do
       get do
         bill_response Bill.find_by_uuid(params[:id]), true
@@ -85,12 +81,12 @@ class ApiV0 < Grape::API
     end
   end
 
-  get :legislative_sessions do
-    paginated = paginate_array(LegislativeSession.in_toronto)
-    leg_sessions_response paginated
-  end
-
   namespace :legislative_sessions do
+    get do
+      paginated = paginate_array(LegislativeSession.in_toronto)
+      leg_sessions_response paginated
+    end
+
     route_param :id do
       get do
         LegislativeSession.find(params[:id])
@@ -114,8 +110,10 @@ class ApiV0 < Grape::API
     end
   end
 
-  get :posts do
-    Post.all
+  namespace :posts do
+    get do
+      Post.all
+    end
   end
 
 end
