@@ -4,4 +4,11 @@ class VoteEvent < ActiveRecord::Base
   has_many :people, through: :person_votes
   belongs_to :bill
   belongs_to :legislative_session
+
+  def self.find_by_uuid(uuid)
+    ocd_uuid = "ocd-vote/#{uuid}"
+
+    self.find(ocd_uuid)
+  end
+
 end

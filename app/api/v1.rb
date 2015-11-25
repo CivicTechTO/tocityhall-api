@@ -9,67 +9,79 @@ class ApiV1 < Grape::API
   paginate per_page: 20, max_per_page: 100, offset: false
 
   get :councillors do
-    people = councillors_response Person.all
+    people = Person.all
+    paginated_people = paginate(Kaminari.paginate_array(people))
 
-    paginate(Kaminari.paginate_array(people))
+    councillors_response(paginated_people)
   end
 
   namespace :councillors do
     route_param :id do
       get do
-        councillor_response Person.find("ocd-person/#{params[:id]}")
+        councillor_response Person.find_by_uuid(params[:id])
       end
 
       get :votes do
-        Person.find("ocd-person/#{params[:id]}").person_votes.limit(20)
+        Person.find_by_uuid(params[:id]).person_votes.limit(20)
       end
 
       get :vote_events do
-        Person.find("ocd-person/#{params[:id]}").vote_events.limit(20)
+        Person.find_by_uuid(params[:id]).vote_events.limit(20)
       end
     end
   end
 
   get :vote_events do
-    VoteEvent.limit(20)
+    paginated = paginate(Kaminari.paginate_array(VoteEvent.all))
+
+    vote_events_response(paginated)
   end
 
   namespace :vote_events do
     route_param :id do
       get do
-        VoteEvent.find(params[:id])
+        vote_event_response VoteEvent.find_by_uuid(params[:id])
       end
 
       get :votes do
-        VoteEvent.find(params[:id]).person_votes.limit(20)
+        person_votes = VoteEvent.find_by_uuid(params[:id]).person_votes
+        paginated = paginate(Kaminari.paginate_array(person_votes))
+
+        person_votes_response paginated
       end
 
       get :councillors do
-        VoteEvent.find(params[:id]).people.limit(20)
+        people = VoteEvent.find_by_uuid(params[:id]).people
+        paginated = paginate(Kaminari.paginate_array(people))
+
+        councillors_response paginated
       end
     end
   end
 
   get :bills do
-    Bill.where(from_organization_id: TORONTO_COUNCIL_ORG_ID).limit(20)
+    bills = Bill.where(from_organization_id: TORONTO_COUNCIL_ORG_ID)
+    paginated_bills = paginate(Kaminari.paginate_array(bills))
+
+    bills_response(paginated_bills)
   end
 
   namespace :bills do
     route_param :id do
       get do
-        Bill.find(params[:id])
+        bill_response Bill.find_by_uuid(params[:id])
       end
 
       get :vote_events do
-        Bill.find(params[:id]).vote_events.limit(20)
+        Bill.find_by_uuid(params[:id]).vote_events.limit(20)
       end
 
       get :councillors do
-        Bill.find(params[:id]).people.limit(20)
+        Bill.find_by_uuid(params[:id]).people.limit(20)
       end
 
       get :votes do
-        Bill.find(params[:id]).person_votes.limit(20)
+        Bill.find_by_uuid(params[:id]).person_votes.limit(20)
       end
     end
   end
