@@ -108,4 +108,14 @@ class ApiV0 < Grape::API
     end
   end
 
+  namespace :memberships do
+    get do
+      Membership.all
+    end
+  end
+
+  get :posts do
+    Post.all
+  end
+
 end

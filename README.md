@@ -41,6 +41,8 @@ GET /legislative_session/:id/bills
 GET /legislative_session/:id/councillors **REALLY SLOW**
 GET /vote_events
 GET /vote_events/:id
+GET /memberships
+GET /posts
 ```
 
 There are 20 results per page, and you may paginate by adding the page
