@@ -113,7 +113,8 @@ class ApiV0 < Grape::API
 
   namespace :posts do
     get do
-      Post.all
+      paginated = paginate_array(Post.all)
+      posts_response(paginated)
     end
   end
 

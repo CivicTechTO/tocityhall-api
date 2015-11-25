@@ -92,13 +92,27 @@ module V0Helpers
       id: strip_uuid(membership.id),
       role: membership.role,
       person: person_response(membership.person),
-      post: membership.post,
+      post: post_response(membership.post),
     }
   end
 
   def memberships_response(memberships)
     memberships.map do |membership|
       membership_response membership
+    end
+  end
+
+  def post_response(post)
+    {
+      id: strip_uuid(post.id),
+      label: post.label,
+      role: post.role,
+    }
+  end
+
+  def posts_response(posts)
+    posts.map do |post|
+      post_response post
     end
   end
 
