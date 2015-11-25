@@ -21,13 +21,13 @@ module V1Helpers
     end
   end
 
-  def bill_response(bill)
+  def bill_response(bill, full_detail = false)
     {
       id: strip_uuid(bill.id),
       identifier: bill.identifier,
       title: bill.title,
       legislative_session: leg_session_response(bill.legislative_session),
-      vote_events: vote_events_response(bill.vote_events),
+      vote_events: vote_events_response(bill.vote_events, full_detail),
     }
   end
 
@@ -37,21 +37,26 @@ module V1Helpers
     end
   end
 
-  def vote_event_response(event)
-    {
+  def vote_event_response(event, full_detail = false)
+    vote_event = {
       id: strip_uuid(event.id),
       date: event.start_date,
       result: event.result,
       motion_text: event.motion_text,
       motion_classification: event.motion_classification,
       legislative_session: leg_session_response(event.legislative_session),
-      votes: person_votes_response(event.person_votes),
     }
+
+    if full_detail
+      vote_event.merge!(votes: person_votes_response(event.person_votes))
+    end
+
+    vote_event
   end
 
-  def vote_events_response(events)
+  def vote_events_response(events, full_detail = false)
     events.map do |event|
-      vote_event_response event
+      vote_event_response event, full_detail
     end
   end
 

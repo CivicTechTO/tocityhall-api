@@ -68,7 +68,7 @@ class ApiV1 < Grape::API
   namespace :bills do
     route_param :id do
       get do
-        bill_response Bill.find_by_uuid(params[:id])
+        bill_response Bill.find_by_uuid(params[:id]), true
       end
 
       get :vote_events do
