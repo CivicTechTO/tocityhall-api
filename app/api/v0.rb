@@ -106,7 +106,7 @@ class ApiV0 < Grape::API
 
   namespace :memberships do
     get do
-      paginated = paginate_array(Membership.all)
+      paginated = paginate_array(Membership.in_toronto)
       memberships_response(paginated)
     end
 
@@ -119,7 +119,7 @@ class ApiV0 < Grape::API
 
   namespace :posts do
     get do
-      paginated = paginate_array(Post.all)
+      paginated = paginate_array(Post.in_toronto)
       posts_response(paginated)
     end
 

@@ -8,4 +8,8 @@ class Membership < ActiveRecord::Base
 
     self.find(ocd_uuid)
   end
+
+  def self.in_toronto
+    self.where(organization_id: TORONTO_COUNCIL_ORG_ID)
+  end
 end
