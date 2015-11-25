@@ -28,27 +28,13 @@ class App < Grape::API
         Person.find(params[:id])
       end
 
-      get :person_votes do
+      get :votes do
         Person.find(params[:id]).person_votes.limit(20)
       end
 
       get :vote_events do
         Person.find(params[:id]).vote_events.limit(20)
       end
-    end
-  end
-
-  get :bills do
-    Bill.where(from_organization_id: TORONTO_COUNCIL_ORG_ID).limit(20).map do |bill|
-      {
-        id: bill.id,
-        identifier: bill.identifier,
-        title: bill.title,
-        legislative_session: bill.legislative_session.name,
-        vote_events: bill.vote_events.all.map do |event|
-          event.slice :start_date, :result, :motion_text, :motion_classification
-        end
-      }
     end
   end
 
@@ -62,14 +48,18 @@ class App < Grape::API
         VoteEvent.find(params[:id])
       end
 
-      get :person_votes do
+      get :votes do
         VoteEvent.find(params[:id]).person_votes.limit(20)
       end
 
-      get :people do
+      get :councillors do
         VoteEvent.find(params[:id]).people.limit(20)
       end
     end
+  end
+
+  get :bills do
+    Bill.where(from_organization_id: TORONTO_COUNCIL_ORG_ID).limit(20)
   end
 
   namespace :bills do
@@ -78,8 +68,16 @@ class App < Grape::API
         Bill.find(params[:id])
       end
 
-      get 'vote_events' do
+      get :vote_events do
         Bill.find(params[:id]).vote_events.limit(20)
+      end
+
+      get :councillors do
+        Bill.find(params[:id]).people.limit(20)
+      end
+
+      get :votes do
+        Bill.find(params[:id]).person_votes.limit(20)
       end
     end
   end
@@ -119,6 +117,8 @@ end
 class Bill < ActiveRecord::Base
   self.table_name = 'opencivicdata_bill'
   has_many :vote_events
+  has_many :people, through: :vote_events
+  has_many :person_votes, through: :vote_events
   belongs_to :legislative_session
 end
 
