@@ -7,17 +7,23 @@ module V0Helpers
     paginate(Kaminari.paginate_array(array))
   end
 
-  def person_response(person)
-    {
+  def person_response(person, full_detail = false)
+    return if person.nil?
+
+    response = {
       id: strip_uuid(person.id),
       name: person.name,
       image: person.image,
-    } unless person.nil?
+    }
+
+    response.merge!(posts: posts_response(person.posts, false)) if full_detail
+
+    response
   end
 
-  def people_response(people)
+  def people_response(people, full_detail = false)
     people.map do |person|
-      person_response person
+      person_response person, full_detail
     end
   end
 
@@ -102,17 +108,23 @@ module V0Helpers
     end
   end
 
-  def post_response(post)
-    {
+  def post_response(post, full_detail = false)
+    response = {
       id: strip_uuid(post.id),
       label: post.label,
       role: post.role,
     }
+
+    if full_detail
+      response.merge!(office_holders: people_response(post.people))
+    end
+
+    response
   end
 
-  def posts_response(posts)
+  def posts_response(posts, full_detail = false)
     posts.map do |post|
-      post_response post
+      post_response post, full_detail
     end
   end
 

@@ -49,7 +49,9 @@ GET /vote_events/:id
 GET /vote_events/:id/votes
 GET /vote_events/:id/councillors
 GET /memberships
+GET /memberships/:id
 GET /posts
+GET /posts/:id
 ```
 
 There are 20 results per page, and you may paginate by adding the page

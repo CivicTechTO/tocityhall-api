@@ -16,7 +16,7 @@ class ApiV0 < Grape::API
 
     route_param :id do
       get do
-        person_response Person.find_by_uuid(params[:id])
+        person_response Person.find_by_uuid(params[:id]), true
       end
 
       get :votes do
@@ -89,7 +89,7 @@ class ApiV0 < Grape::API
 
     route_param :id do
       get do
-        LegislativeSession.find(params[:id])
+        leg_session_response LegislativeSession.find(params[:id])
       end
 
       get :bills do
@@ -109,12 +109,24 @@ class ApiV0 < Grape::API
       paginated = paginate_array(Membership.all)
       memberships_response(paginated)
     end
+
+    route_param :id do
+      get do
+        membership_response Membership.find_by_uuid(params[:id])
+      end
+    end
   end
 
   namespace :posts do
     get do
       paginated = paginate_array(Post.all)
       posts_response(paginated)
+    end
+
+    route_param :id do
+      get do
+        post_response Post.find_by_uuid(params[:id])
+      end
     end
   end
 
