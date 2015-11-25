@@ -10,4 +10,8 @@ class Bill < ActiveRecord::Base
 
     self.find(ocd_uuid)
   end
+
+  def self.in_toronto
+    self.where(from_organization_id: TORONTO_COUNCIL_ORG_ID)
+  end
 end

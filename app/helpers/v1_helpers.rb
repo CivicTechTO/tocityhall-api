@@ -1,7 +1,10 @@
 module V1Helpers
-
   def strip_uuid(ocd_uuid)
     ocd_uuid.split('/').last
+  end
+
+  def paginate_array(array)
+    paginate(Kaminari.paginate_array(array))
   end
 
   def councillor_response(person)
@@ -23,7 +26,8 @@ module V1Helpers
       id: strip_uuid(bill.id),
       identifier: bill.identifier,
       title: bill.title,
-      legislative_session: leg_session_response(bill.legislative_session)
+      legislative_session: leg_session_response(bill.legislative_session),
+      vote_events: vote_events_response(bill.vote_events),
     }
   end
 
@@ -41,6 +45,7 @@ module V1Helpers
       motion_text: event.motion_text,
       motion_classification: event.motion_classification,
       legislative_session: leg_session_response(event.legislative_session),
+      votes: person_votes_response(event.person_votes),
     }
   end
 
@@ -52,9 +57,8 @@ module V1Helpers
 
   def person_vote_response(person_vote)
     {
-      id: person_vote.id,
       option: person_vote.option,
-      voter: councillor_response(person_vote.person),
+      councillor: councillor_response(person_vote.person),
     }
   end
 

@@ -45,14 +45,14 @@ class ApiV1 < Grape::API
 
       get :votes do
         person_votes = VoteEvent.find_by_uuid(params[:id]).person_votes
-        paginated = paginate(Kaminari.paginate_array(person_votes))
+        paginated = paginate_array(person_votes)
 
         person_votes_response paginated
       end
 
       get :councillors do
         people = VoteEvent.find_by_uuid(params[:id]).people
-        paginated = paginate(Kaminari.paginate_array(people))
+        paginated = paginate_array(people)
 
         councillors_response paginated
       end
@@ -60,10 +60,9 @@ class ApiV1 < Grape::API
   end
 
   get :bills do
-    bills = Bill.where(from_organization_id: TORONTO_COUNCIL_ORG_ID)
-    paginated_bills = paginate(Kaminari.paginate_array(bills))
+    paginated = paginate_array(Bill.in_toronto)
 
-    bills_response(paginated_bills)
+    bills_response paginated
   end
 
   namespace :bills do
@@ -87,7 +86,7 @@ class ApiV1 < Grape::API
   end
 
   get :sessions do
-    LegislativeSession.where(jurisdiction_id: TORONTO_COUNCIL_JUR_ID).limit(20)
+    LegislativeSession.in_toronto.limit(20)
   end
 
   namespace :sessions do
