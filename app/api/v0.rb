@@ -11,12 +11,12 @@ class ApiV0 < Grape::API
   namespace :councillors do
     get do
       paginated = paginate_array(Person.all)
-      councillors_response(paginated)
+      people_response(paginated)
     end
 
     route_param :id do
       get do
-        councillor_response Person.find_by_uuid(params[:id])
+        person_response Person.find_by_uuid(params[:id])
       end
 
       get :votes do
@@ -51,7 +51,7 @@ class ApiV0 < Grape::API
         people = VoteEvent.find_by_uuid(params[:id]).people
         paginated = paginate_array(people)
 
-        councillors_response paginated
+        people_response paginated
       end
     end
   end
@@ -99,14 +99,15 @@ class ApiV0 < Grape::API
 
       get :councillors do
         paginated = paginate_array(LegislativeSession.find(params[:id]).people)
-        councillors_response paginated
+        people_response paginated
       end
     end
   end
 
   namespace :memberships do
     get do
-      Membership.all
+      paginated = paginate_array(Membership.all)
+      memberships_response(paginated)
     end
   end
 

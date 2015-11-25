@@ -7,7 +7,7 @@ module V0Helpers
     paginate(Kaminari.paginate_array(array))
   end
 
-  def councillor_response(person)
+  def person_response(person)
     {
       id: strip_uuid(person.id),
       name: person.name,
@@ -15,9 +15,9 @@ module V0Helpers
     } unless person.nil?
   end
 
-  def councillors_response(people)
+  def people_response(people)
     people.map do |person|
-      councillor_response person
+      person_response person
     end
   end
 
@@ -63,7 +63,7 @@ module V0Helpers
   def person_vote_response(person_vote)
     {
       option: person_vote.option,
-      councillor: councillor_response(person_vote.person),
+      councillor: person_response(person_vote.person),
     }
   end
 
@@ -84,6 +84,21 @@ module V0Helpers
   def leg_sessions_response(sessions)
     sessions.map do |session|
       leg_session_response session
+    end
+  end
+
+  def membership_response(membership)
+    {
+      id: strip_uuid(membership.id),
+      role: membership.role,
+      person: person_response(membership.person),
+      post: membership.post,
+    }
+  end
+
+  def memberships_response(memberships)
+    memberships.map do |membership|
+      membership_response membership
     end
   end
 
