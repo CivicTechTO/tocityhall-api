@@ -4,22 +4,28 @@ class ApiV1 < Grape::API
   helpers V1Helpers
   formatter :json, PrettyJSON
 
+  include Grape::Kaminari
+
+  paginate per_page: 20, max_per_page: 100, offset: false
+
   get :councillors do
-    Person.limit(20)
+    people = councillors_response Person.all
+
+    paginate(Kaminari.paginate_array(people))
   end
 
   namespace :councillors do
     route_param :id do
       get do
-        Person.find(params[:id])
+        councillor_response Person.find("ocd-person/#{params[:id]}")
       end
 
       get :votes do
-        Person.find(params[:id]).person_votes.limit(20)
+        Person.find("ocd-person/#{params[:id]}").person_votes.limit(20)
       end
 
       get :vote_events do
-        Person.find(params[:id]).vote_events.limit(20)
+        Person.find("ocd-person/#{params[:id]}").vote_events.limit(20)
       end
     end
   end
