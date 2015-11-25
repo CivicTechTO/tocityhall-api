@@ -38,6 +38,7 @@ GET /bills/:id
 GET /legislative_session
 GET /legislative_session/:id
 GET /legislative_session/:id/bills
+GET /legislative_session/:id/councillors **REALLY SLOW**
 GET /vote_events
 GET /vote_events/:id
 ```

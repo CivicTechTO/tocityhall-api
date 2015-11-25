@@ -100,6 +100,11 @@ class ApiV0 < Grape::API
         paginated = paginate_array(LegislativeSession.find(params[:id]).bills)
         bills_response paginated
       end
+
+      get :councillors do
+        paginated = paginate_array(LegislativeSession.find(params[:id]).people)
+        councillors_response paginated
+      end
     end
   end
 
