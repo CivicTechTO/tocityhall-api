@@ -1,4 +1,5 @@
-require './app'
+require './config/environment'
+require './main'
 
 use ActiveRecord::ConnectionAdapters::ConnectionManagement
-run App
+run ApiApp

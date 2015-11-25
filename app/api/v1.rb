@@ -1,21 +1,7 @@
-RACK_ENV = (ENV['RACK_ENV'] || 'development').to_sym
-require 'bundler'
-Bundler.require(:default, RACK_ENV)
-
-require 'active_support/core_ext/hash'
-
-TORONTO_COUNCIL_ORG_ID = 'ocd-organization/d151a57c-2600-4c3a-808a-863436e338ff'
-TORONTO_COUNCIL_JUR_ID = 'ocd-jurisdiction/country:ca/csd:3520005/legislature'
-
-module PrettyJSON
-  def self.call(object, env)
-    JSON.pretty_generate(JSON.parse(object.to_json))
-  end
-end
-
-class App < Grape::API
+class ApiV1 < Grape::API
   version 'v1', using: :path
   format :json
+  helpers V1Helpers
   formatter :json, PrettyJSON
 
   get :councillors do
@@ -97,40 +83,5 @@ class App < Grape::API
       end
     end
   end
-end
 
-Grape::ActiveRecord.database_file = 'db/config.yml'
-ActiveRecord::Base.table_name_prefix = 'opencivicdata_'
-
-class Person < ActiveRecord::Base
-  self.table_name = 'opencivicdata_person'
-  has_many :person_votes, foreign_key: :voter_id
-  has_many :vote_events, through: :person_votes
-end
-
-class PersonVote < ActiveRecord::Base
-  self.table_name = 'opencivicdata_personvote'
-  belongs_to :person, foreign_key: :voter_id
-  belongs_to :vote_event
-end
-
-class Bill < ActiveRecord::Base
-  self.table_name = 'opencivicdata_bill'
-  has_many :vote_events
-  has_many :people, through: :vote_events
-  has_many :person_votes, through: :vote_events
-  belongs_to :legislative_session
-end
-
-class VoteEvent < ActiveRecord::Base
-  self.table_name = 'opencivicdata_voteevent'
-  has_many :person_votes
-  has_many :people, through: :person_votes
-  belongs_to :bill
-  belongs_to :legislative_session
-end
-
-class LegislativeSession < ActiveRecord::Base
-  self.table_name = 'opencivicdata_legislativesession'
-  has_many :bills
 end
