@@ -31,6 +31,7 @@ You should now be able to access the API at
 The current endpoints are:
 
 ```
+GET /divisions
 GET /councillors
 GET /councillors/:id
 GET /councillors/:id/votes

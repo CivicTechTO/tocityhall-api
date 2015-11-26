@@ -8,6 +8,12 @@ class ApiV0 < Grape::API
 
   paginate per_page: 20, max_per_page: 100, offset: false
 
+  namespace :divisions do
+    get do
+      paginated = paginate_array(Division.all)
+    end
+  end
+
   namespace :councillors do
     get do
       paginated = paginate_array(Person.all)
