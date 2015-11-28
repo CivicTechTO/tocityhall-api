@@ -8,9 +8,69 @@ class ApiV0 < Grape::API
 
   paginate per_page: 20, max_per_page: 100, offset: false
 
-  namespace :divisions do
+  # No need to implement while we're just working on Toronto.
+  # namespace :divisions
+  # namespace :jurisdictions
+  # namespace :organizations
+
+  namespace :legislative_sessions do
     get do
-      paginated = paginate_array(Division.all)
+      paginated = paginate_array(LegislativeSession.all)
+      leg_sessions_response paginated
+    end
+
+    route_param :id do
+      get do
+        leg_session_response LegislativeSession.find(params[:id])
+      end
+
+      get :bills do
+        paginated = paginate_array(LegislativeSession.find(params[:id]).bills)
+        bills_response paginated
+      end
+
+      get :councillors do
+        paginated = paginate_array(LegislativeSession.find(params[:id]).people)
+        people_response paginated
+      end
+    end
+  end
+
+  namespace :events do
+    get do
+      Event.all
+    end
+
+    route_param :id do
+      get do
+        Event.find_by_uuid(params[:id])
+      end
+    end
+  end
+
+  namespace :posts do
+    get do
+      paginated = paginate_array(Post.all)
+      posts_response(paginated)
+    end
+
+    route_param :id do
+      get do
+        post_response Post.find_by_uuid(params[:id])
+      end
+    end
+  end
+
+  namespace :memberships do
+    get do
+      paginated = paginate_array(Membership.all)
+      memberships_response(paginated)
+    end
+
+    route_param :id do
+      get do
+        membership_response Membership.find_by_uuid(params[:id])
+      end
     end
   end
 
@@ -35,36 +95,9 @@ class ApiV0 < Grape::API
     end
   end
 
-  namespace :vote_events do
-    get do
-      paginated = paginate_array(VoteEvent.all)
-      vote_events_response(paginated)
-    end
-
-    route_param :id do
-      get do
-        vote_event_response VoteEvent.find_by_uuid(params[:id])
-      end
-
-      get :votes do
-        person_votes = VoteEvent.find_by_uuid(params[:id]).person_votes
-        paginated = paginate_array(person_votes)
-
-        person_votes_response paginated
-      end
-
-      get :councillors do
-        people = VoteEvent.find_by_uuid(params[:id]).people
-        paginated = paginate_array(people)
-
-        people_response paginated
-      end
-    end
-  end
-
   namespace :bills do
     get do
-      paginated = paginate_array(Bill.in_toronto)
+      paginated = paginate_array(Bill.all)
       bills_response paginated
     end
 
@@ -87,51 +120,29 @@ class ApiV0 < Grape::API
     end
   end
 
-  namespace :legislative_sessions do
+  namespace :votes do
     get do
-      paginated = paginate_array(LegislativeSession.in_toronto)
-      leg_sessions_response paginated
+      paginated = paginate_array(VoteEvent.all)
+      vote_events_response(paginated)
     end
 
     route_param :id do
       get do
-        leg_session_response LegislativeSession.find(params[:id])
+        vote_event_response VoteEvent.find_by_uuid(params[:id]), true
       end
 
-      get :bills do
-        paginated = paginate_array(LegislativeSession.find(params[:id]).bills)
-        bills_response paginated
+      get :votes do
+        person_votes = VoteEvent.find_by_uuid(params[:id]).person_votes
+        paginated = paginate_array(person_votes)
+
+        person_votes_response paginated
       end
 
       get :councillors do
-        paginated = paginate_array(LegislativeSession.find(params[:id]).people)
+        people = VoteEvent.find_by_uuid(params[:id]).people
+        paginated = paginate_array(people)
+
         people_response paginated
-      end
-    end
-  end
-
-  namespace :memberships do
-    get do
-      paginated = paginate_array(Membership.in_toronto)
-      memberships_response(paginated)
-    end
-
-    route_param :id do
-      get do
-        membership_response Membership.find_by_uuid(params[:id])
-      end
-    end
-  end
-
-  namespace :posts do
-    get do
-      paginated = paginate_array(Post.in_toronto)
-      posts_response(paginated)
-    end
-
-    route_param :id do
-      get do
-        post_response Post.find_by_uuid(params[:id])
       end
     end
   end

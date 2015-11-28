@@ -45,10 +45,10 @@ GET /legislative_session
 GET /legislative_session/:id
 GET /legislative_session/:id/bills
 GET /legislative_session/:id/councillors **REALLY SLOW**
-GET /vote_events
-GET /vote_events/:id
-GET /vote_events/:id/votes
-GET /vote_events/:id/councillors
+GET /votes
+GET /votes/:id
+GET /votes/:id/votes
+GET /votes/:id/councillors
 GET /memberships
 GET /memberships/:id
 GET /posts

@@ -16,7 +16,11 @@ module V0Helpers
       image: person.image,
     }
 
-    response.merge!(posts: posts_response(person.posts, false)) if full_detail
+    if full_detail
+      response.merge!({
+        posts: posts_response(person.posts),
+      })
+    end
 
     response
   end
@@ -28,13 +32,22 @@ module V0Helpers
   end
 
   def bill_response(bill, full_detail = false)
-    {
+    response = {
       id: strip_uuid(bill.id),
       identifier: bill.identifier,
       title: bill.title,
-      legislative_session: leg_session_response(bill.legislative_session),
-      vote_events: vote_events_response(bill.vote_events, full_detail),
+      classification: bill.classification,
+      subject: bill.subject,
     }
+
+    if full_detail
+      response.merge!({
+        legislative_session: leg_session_response(bill.legislative_session),
+        votes: vote_events_response(bill.vote_events, true),
+      })
+    end
+
+    response
   end
 
   def bills_response(bills)
@@ -44,20 +57,24 @@ module V0Helpers
   end
 
   def vote_event_response(event, full_detail = false)
-    vote_event = {
+    response = {
       id: strip_uuid(event.id),
-      date: event.start_date,
+      start_date: event.start_date,
       result: event.result,
       motion_text: event.motion_text,
       motion_classification: event.motion_classification,
       legislative_session: leg_session_response(event.legislative_session),
+      bill: bill_response(event.bill),
+      counts: vote_counts_response(event.vote_counts),
     }
 
     if full_detail
-      vote_event.merge!(votes: person_votes_response(event.person_votes))
+      response.merge!({
+        roll_call: person_votes_response(event.person_votes),
+      })
     end
 
-    vote_event
+    response
   end
 
   def vote_events_response(events, full_detail = false)
@@ -66,10 +83,23 @@ module V0Helpers
     end
   end
 
+  def vote_count_response(vote_count)
+    {
+      option: vote_count.option,
+      value: vote_count.value,
+    }
+  end
+
+  def vote_counts_response(vote_counts)
+    vote_counts.map do |vote_count|
+      vote_count_response vote_count
+    end
+  end
+
   def person_vote_response(person_vote)
     {
-      option: person_vote.option,
-      councillor: person_response(person_vote.person),
+      vote_type: person_vote.option,
+      person: person_response(person_vote.person),
     }
   end
 
@@ -84,6 +114,9 @@ module V0Helpers
       id: session.id,
       name: session.name,
       jurisdiction_id: session.jurisdiction_id,
+      start_date: session.start_date,
+      end_date: session.end_date,
+      classification: session.classification,
     }
   end
 
