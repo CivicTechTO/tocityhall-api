@@ -53,6 +53,7 @@ GET /memberships
 GET /memberships/:id
 GET /posts
 GET /posts/:id
+GET /events
 ```
 
 There are 20 results per page, and you may paginate by adding the page
