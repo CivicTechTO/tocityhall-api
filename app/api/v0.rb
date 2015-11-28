@@ -38,7 +38,7 @@ class ApiV0 < Grape::API
 
   namespace :events do
     get do
-      Event.all
+      paginate_array(Event.all)
     end
 
     route_param :id do
