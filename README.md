@@ -32,6 +32,8 @@ The current endpoints are:
 
 ```
 GET /divisions
+GET /organizations
+GET /organizations/:id
 GET /councillors
 GET /councillors/:id
 GET /councillors/:id/votes
