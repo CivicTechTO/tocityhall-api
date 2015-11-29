@@ -31,6 +31,33 @@ module V0Helpers
     end
   end
 
+  def orgs_response(orgs)
+    orgs.map do |org|
+      org_response org
+    end
+  end
+
+  def org_response(org, full_detail = false)
+    return nil if org.nil?
+    response = {
+      id: strip_uuid(org.id),
+      name: org.name,
+      classification: org.classification,
+      jurisdiction_id: org.jurisdiction_id,
+      parent: org_response(org.parent),
+    }
+
+    if full_detail
+      response.merge!(
+        posts: posts_response(org.posts, true),
+        children: orgs_response(org.children),
+        members: people_response(org.people),
+      )
+    end
+
+    return response
+  end
+
   def bill_response(bill, full_detail = false)
     response = {
       id: strip_uuid(bill.id),
@@ -144,7 +171,6 @@ module V0Helpers
   def post_response(post, full_detail = false)
     response = {
       id: strip_uuid(post.id),
-      label: post.label,
       role: post.role,
     }
 

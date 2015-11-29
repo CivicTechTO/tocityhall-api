@@ -11,7 +11,18 @@ class ApiV0 < Grape::API
   # No need to implement while we're just working on Toronto.
   # namespace :divisions
   # namespace :jurisdictions
-  # namespace :organizations
+
+  namespace :organizations do
+    get do
+      orgs_response paginate_array(Organization.all)
+    end
+
+    route_param :id do
+      get do
+        org_response(Organization.find_by_uuid(params[:id]), true)
+      end
+    end
+  end
 
   namespace :legislative_sessions do
     get do
