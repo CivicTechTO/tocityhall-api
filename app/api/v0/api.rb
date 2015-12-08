@@ -18,13 +18,13 @@ module App
           end
 
           get :bills do
-            paginated = paginate_array(LegislativeSession.find(params[:id]).bills)
-            bills_response paginated
+            @session_bills = paginate LegislativeSession.find(params[:id]).bills
+            present @session_bills
           end
 
-          get :councillors do
-            paginated = paginate_array(LegislativeSession.find(params[:id]).people)
-            people_response paginated
+          get :people do
+            @session_people = paginate LegislativeSession.find(params[:id]).people
+            present @session_people
           end
         end
       end
@@ -40,7 +40,8 @@ module App
 
         route_param :id do
           get do
-            Event.find_by_uuid(params[:id])
+            @event = Event.find_by_uuid(params[:id])
+            present @event
           end
         end
       end
@@ -52,13 +53,13 @@ module App
       resource :posts do
         get do
           @posts = paginate Post.all
-          present @posts
+          present @posts, with: App::Entities::Posts
         end
 
         route_param :id do
           get do
             @post = Post.find_by_uuid(params[:id])
-            present @post
+            present @post, with: App::Entities::Posts
           end
         end
       end

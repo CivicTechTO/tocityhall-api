@@ -137,23 +137,6 @@ module V0Helpers
     end
   end
 
-  def leg_session_response(session)
-    {
-      id: session.id,
-      name: session.name,
-      jurisdiction_id: session.jurisdiction_id,
-      start_date: session.start_date,
-      end_date: session.end_date,
-      classification: session.classification,
-    }
-  end
-
-  def leg_sessions_response(sessions)
-    sessions.map do |session|
-      leg_session_response session
-    end
-  end
-
   def membership_response(membership, filter = [])
     response = {
       id: strip_uuid(membership.id),

@@ -8,6 +8,8 @@ module App
       expose :name
       expose :start_date
       expose :end_date
+      expose :jurisdiction_id
+      expose :classification
     end
 
     class Organizations < Grape::Entity
@@ -31,6 +33,12 @@ module App
       expose :name
       expose :image
       expose :organizations, using: Organizations
+    end
+
+    class Posts < Grape::Entity
+      expose :id
+      expose :role
+      expose :people
     end
 
   end
