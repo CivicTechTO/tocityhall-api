@@ -10,17 +10,18 @@ module V0Helpers
   def person_response(person, full_detail = false)
     return if person.nil?
 
+    keys_to_filter = [
+      person.class.model_name.plural,
+      person.class.model_name.singular,
+    ]
+
     response = {
       id: strip_uuid(person.id),
       name: person.name,
       image: person.image,
+      posts: posts_response(person.posts, keys_to_filter),
+      memberships: memberships_response(person.memberships, keys_to_filter),
     }
-
-    if full_detail
-      response.merge!({
-        posts: posts_response(person.posts),
-      })
-    end
 
     response
   end
@@ -153,37 +154,49 @@ module V0Helpers
     end
   end
 
-  def membership_response(membership)
-    {
+  def membership_response(membership, filter = [])
+    response = {
       id: strip_uuid(membership.id),
       role: membership.role,
+      start_date: membership.start_date,
+      end_date: membership.end_date,
+      #post: post_response(membership.post),
+      #organization: org_response(membership.organization),
       person: person_response(membership.person),
-      post: post_response(membership.post),
     }
+
+    filter.each { |k| response.delete! k }
+
+
+    if full_detail
+      response.merge!(person: person_response(membership.person))
+    end
+
+    return response
+
   end
 
-  def memberships_response(memberships)
+  def memberships_response(memberships, filter = [])
     memberships.map do |membership|
-      membership_response membership
+      membership_response membership, filter
     end
   end
 
-  def post_response(post, full_detail = false)
+  def post_response(post, filter = [])
     response = {
       id: strip_uuid(post.id),
       role: post.role,
+      people: people_response(post.people),
     }
 
-    if full_detail
-      response.merge!(office_holders: people_response(post.people))
-    end
+    filter.each { |k| response.delete! k }
 
     response
   end
 
-  def posts_response(posts, full_detail = false)
+  def posts_response(posts, filter = [])
     posts.map do |post|
-      post_response post, full_detail
+      post_response post, filter
     end
   end
 

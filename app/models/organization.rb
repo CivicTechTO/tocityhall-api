@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :children, class_name: 'Organization', foreign_key: 'parent_id'
 
   belongs_to :parent, class_name: 'Organization'
+  belongs_to :membership
 
   def self.find_by_uuid(uuid)
     ocd_uuid = "ocd-organization/#{uuid}"

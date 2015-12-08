@@ -1,3 +1,5 @@
+require_relative 'v0/api'
+
 class ApiV0 < Grape::API
   version 'v0', using: :path
   format :json
@@ -12,17 +14,7 @@ class ApiV0 < Grape::API
   # namespace :divisions
   # namespace :jurisdictions
 
-  namespace :organizations do
-    get do
-      orgs_response paginate_array(Organization.all)
-    end
-
-    route_param :id do
-      get do
-        org_response(Organization.find_by_uuid(params[:id]), true)
-      end
-    end
-  end
+  mount App::API::Organizations
 
   namespace :legislative_sessions do
     get do
@@ -85,26 +77,7 @@ class ApiV0 < Grape::API
     end
   end
 
-  namespace :councillors do
-    get do
-      paginated = paginate_array(Person.all)
-      people_response(paginated)
-    end
-
-    route_param :id do
-      get do
-        person_response Person.find_by_uuid(params[:id]), true
-      end
-
-      get :votes do
-        Person.find_by_uuid(params[:id]).person_votes.limit(20)
-      end
-
-      get :vote_events do
-        Person.find_by_uuid(params[:id]).vote_events.limit(20)
-      end
-    end
-  end
+  mount App::API::People
 
   namespace :bills do
     get do
