@@ -28,35 +28,10 @@ You should now be able to access the API at
 
     http://localhost:9292/v0/
 
-The current endpoints are:
+This API is [Swagger-compliant](http://swagger.io/getting-started/).
+With the service running, you may view the API docs here:
 
-```
-GET /divisions
-GET /organizations
-GET /organizations/:id
-GET /councillors
-GET /councillors/:id
-GET /councillors/:id/votes
-GET /councillors/:id/vote_events
-GET /bills
-GET /bills/:id
-GET /bills/:id/vote_events
-GET /bills/:id/councillors
-GET /bills/:id/votes
-GET /legislative_session
-GET /legislative_session/:id
-GET /legislative_session/:id/bills
-GET /legislative_session/:id/councillors **REALLY SLOW**
-GET /votes
-GET /votes/:id
-GET /votes/:id/votes
-GET /votes/:id/councillors
-GET /memberships
-GET /memberships/:id
-GET /posts
-GET /posts/:id
-GET /events
-```
+    http://petstore.swagger.io/?url=http://localhost:9292/v0/docs
 
 There are 20 results per page, and you may paginate by adding the page
 query string.
