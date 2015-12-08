@@ -4,7 +4,7 @@ module V0Helpers
   end
 
   def paginate_array(array)
-    paginate(Kaminari.paginate_array(array))
+    array
   end
 
   def person_response(person, full_detail = false)

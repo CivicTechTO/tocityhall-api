@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
   has_many :vote_events, through: :person_votes
   has_many :memberships
   has_many :posts, through: :memberships
+  has_many :organizations, through: :memberships
 
   def self.find_by_uuid(uuid)
     ocd_uuid = "ocd-person/#{uuid}"

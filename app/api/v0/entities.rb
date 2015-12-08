@@ -2,23 +2,35 @@ require 'grape'
 
 module App
   module Entities
-    class People < Grape::Entity
+
+    class LegislativeSessions < Grape::Entity
       expose :id
       expose :name
-      expose :image
+      expose :start_date
+      expose :end_date
     end
 
     class Organizations < Grape::Entity
+      is_child = lambda {|instance, options| options[:type] == :child}
+      is_parent = lambda {|instance, options| options[:type] == :parent}
+
       expose :id
       expose :name
       expose :classification
       expose :jurisdiction_id
-      expose :parent, if: lambda {|org, options| options[:type] != :children} do |org, options|
+      expose :parent, unless: is_child do |org, options|
         App::Entities::Organizations.represent org.parent, options.merge(type: :parent)
       end
-      expose :children, if: lambda {|org, options| options[:type] != :parent} do |org, options|
-        App::Entities::Organizations.represent org.children, options.merge(type: :children)
+      expose :children, unless: is_parent do |org, options|
+        App::Entities::Organizations.represent org.children, options.merge(type: :child)
       end
+    end
+
+    class People < Grape::Entity
+      expose :id
+      expose :name
+      expose :image
+      expose :organizations, using: Organizations
     end
 
   end
