@@ -1,7 +1,7 @@
 require_relative 'v0/api'
+require 'grape-swagger'
 
 class ApiV0 < Grape::API
-  version 'v0', using: :path
   format :json
   helpers V0Helpers
   formatter :json, PrettyJSON
@@ -21,5 +21,8 @@ class ApiV0 < Grape::API
   mount App::API::People
   mount App::API::Bills
   mount App::API::Votes
+
+  add_swagger_documentation mount_path: 'docs',
+    base_path: '/v0'
 
 end
