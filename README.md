@@ -28,6 +28,8 @@ You should now be able to access the API at
 
     http://localhost:9292/v0/
 
+### Documentation
+
 This API is [Swagger-compliant](http://swagger.io/getting-started/).
 With the service running, you may view the API docs here:
 
