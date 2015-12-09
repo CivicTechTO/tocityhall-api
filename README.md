@@ -6,7 +6,9 @@ API for Toronto City Hall data gathered via the [Open Civic Data
 
 **WARNING:** *I provide no guarantees on the docs being entirely
 up-to-date. Please don't spend more than a few minutes getting it to
-work without speaking with me. I'm on Freenode under username patcon.*
+work without speaking with me. I'm on the Freenode IRC network as
+"patcon". [[Sign into
+IRC]](https://kiwiirc.com/client/irc.freenode.net/#sunlightlabs)*
 
 ### Requirements
 
