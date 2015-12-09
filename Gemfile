@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'rack', '~> 1.6.0'
 gem 'grape', '~> 0.12.0'
 gem 'grape-kaminari'
