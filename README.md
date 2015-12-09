@@ -46,6 +46,11 @@ A relatively up-to-date demo API is running at:
 
     https://restful-toronto-city-hall-api.herokuapp.com/v0
 
+It is using data scraped from my in-progress improvements to the Toronto
+OCD dataset:
+
+    https://github.com/patcon/scrapers-ca/tree/toronto-committee-orgs
+
 The Swagger docs can be viewed here (although they are embarrasingly
 broken):
 
