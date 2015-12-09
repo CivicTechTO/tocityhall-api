@@ -44,12 +44,20 @@ module App
       expose :organizations, using: MinimalOrgs
     end
 
+    class MinimalPeople < People
+      unexpose :organizations
+    end
+
     class Posts < Grape::Entity
       expose :id do |instance, options|
         instance.id.split('/').last
       end
       expose :role
       expose :people
+    end
+
+    class FullOrganizations < Organizations
+      expose :people, using: MinimalPeople
     end
 
   end

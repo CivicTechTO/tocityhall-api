@@ -149,7 +149,12 @@ module App
         route_param :id do
           get do
             @organization = Organization.find_by_uuid(params[:id])
-            present @organization, with: App::Entities::Organizations
+            present @organization, with: App::Entities::FullOrganizations
+          end
+
+          get :people do
+            @people = Organization.find_by_uuid(params[:id]).people
+            present @people, with: App::Entities::People
           end
         end
       end
