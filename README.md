@@ -40,6 +40,17 @@ query string.
 
 No guarantees of stability while the API is labelled as `v0`.
 
+### Live Demo
+
+A relatively up-to-date demo API is running at:
+
+    https://restful-toronto-city-hall-api.herokuapp.com/v0
+
+The Swagger docs can be viewed here (although they are embarrasingly
+broken):
+
+    http://petstore.swagger.io/?url=https://restful-toronto-city-hall-api.herokuapp.com/v0/docs
+
 ### Related Resources
 
 There are a few wonderful resources related to the current hosted OCD
