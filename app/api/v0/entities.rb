@@ -28,11 +28,16 @@ module App
       end
     end
 
+    class MinimalOrgs < Organizations
+      unexpose :parent
+      unexpose :children
+    end
+
     class People < Grape::Entity
       expose :id
       expose :name
       expose :image
-      expose :organizations, using: Organizations
+      expose :organizations, using: MinimalOrgs
     end
 
     class Posts < Grape::Entity
