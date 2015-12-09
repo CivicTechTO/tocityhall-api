@@ -16,7 +16,9 @@ module App
       is_child = lambda {|instance, options| options[:type] == :child}
       is_parent = lambda {|instance, options| options[:type] == :parent}
 
-      expose :id
+      expose :id do |instance, options|
+        instance.id.split('/').last
+      end
       expose :name
       expose :classification
       expose :jurisdiction_id
@@ -34,14 +36,18 @@ module App
     end
 
     class People < Grape::Entity
-      expose :id
+      expose :id do |instance, options|
+        instance.id.split('/').last
+      end
       expose :name
       expose :image
       expose :organizations, using: MinimalOrgs
     end
 
     class Posts < Grape::Entity
-      expose :id
+      expose :id do |instance, options|
+        instance.id.split('/').last
+      end
       expose :role
       expose :people
     end
