@@ -16,7 +16,7 @@ module App
       is_child = lambda {|instance, options| options[:type] == :child}
       is_parent = lambda {|instance, options| options[:type] == :parent}
 
-      expose :id do |instance, options|
+      expose :id do |instance|
         instance.id.split('/').last
       end
       expose :name
@@ -36,28 +36,26 @@ module App
     end
 
     class Memberships < Grape::Entity
-      expose :id do |instance, options|
+      expose :id do |instance|
         instance.id.split('/').last
       end
       expose :role, :start_date, :end_date, :post_id
-      expose :organization do
-        expose :id do |instance, options|
-          instance.organization.id
-        end
-        expose :name do |instance, options|
-          instance.organization.name
-        end
+      expose :organization do |instance|
+        Organizations.represent instance.organization, only: [:id, :name]
       end
     end
 
     class People < Grape::Entity
-      expose :id do |instance, options|
+      expose :id do |instance|
         instance.id.split('/').last
       end
       expose :name
       expose :image
-      expose :organizations, using: MinimalOrgs
-      expose :memberships, using: Memberships
+      expose :organizations, unless: :collection, using: MinimalOrgs
+      expose :organizations, if: :collection do |instance|
+        Organizations.represent instance.organizations, only: [:id, :name]
+      end
+      expose :memberships, unless: :collection, using: Memberships
     end
 
     class MinimalPeople < People
@@ -65,7 +63,7 @@ module App
     end
 
     class Posts < Grape::Entity
-      expose :id do |instance, options|
+      expose :id do |instance|
         instance.id.split('/').last
       end
       expose :role
