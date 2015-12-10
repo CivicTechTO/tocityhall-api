@@ -87,6 +87,16 @@ module App
           get :vote_events do
             Person.find_by_uuid(params[:id]).vote_events.limit(20)
           end
+
+          get :organizations do
+            @organizations = paginate Person.find_by_uuid(params[:id]).organizations
+            present @organizations, with: App::Entities::Organizations
+          end
+
+          get :memberships do
+            @memberships = paginate Person.find_by_uuid(params[:id]).memberships
+            present @memberships
+          end
         end
       end
 
@@ -153,7 +163,7 @@ module App
           end
 
           get :people do
-            @people = Organization.find_by_uuid(params[:id]).people
+            @people = paginate Organization.find_by_uuid(params[:id]).people
             present @people, with: App::Entities::People
           end
         end

@@ -35,6 +35,13 @@ module App
       unexpose :children
     end
 
+    class Memberships < Grape::Entity
+      expose :id do |instance, options|
+        instance.id.split('/').last
+      end
+      expose :role, :start_date, :end_date, :post_id, :organization_id
+    end
+
     class People < Grape::Entity
       expose :id do |instance, options|
         instance.id.split('/').last
@@ -42,6 +49,7 @@ module App
       expose :name
       expose :image
       expose :organizations, using: MinimalOrgs
+      expose :memberships, using: Memberships
     end
 
     class MinimalPeople < People
