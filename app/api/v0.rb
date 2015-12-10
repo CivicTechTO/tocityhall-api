@@ -2,9 +2,11 @@ require_relative 'v0/api'
 require 'grape-swagger'
 
 class ApiV0 < Grape::API
-  format :json
-  helpers V0Helpers
+  content_type :json, 'application/json'
+  default_format :json
   formatter :json, PrettyJSON
+
+  helpers V0Helpers
 
   include Grape::Kaminari
   paginate per_page: 20, max_per_page: 30, offset: false
