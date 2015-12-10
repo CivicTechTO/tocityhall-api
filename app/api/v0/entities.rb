@@ -39,7 +39,15 @@ module App
       expose :id do |instance, options|
         instance.id.split('/').last
       end
-      expose :role, :start_date, :end_date, :post_id, :organization_id
+      expose :role, :start_date, :end_date, :post_id
+      expose :organization do
+        expose :id do |instance, options|
+          instance.organization.id
+        end
+        expose :name do |instance, options|
+          instance.organization.name
+        end
+      end
     end
 
     class People < Grape::Entity
