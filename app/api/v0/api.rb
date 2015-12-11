@@ -5,6 +5,7 @@ module App
 
     class LegislativeSessions < Grape::API
       include Grape::Kaminari
+      desc 'Four-Year legislative terms of governance'
       resource :legislative_sessions do
         get do
           @sessions = paginate LegislativeSession.all
@@ -32,6 +33,7 @@ module App
 
     class Events < Grape::API
       include Grape::Kaminari
+      desc 'Meetings of organizations or persons'
       resource :events do
         get do
           @events = paginate Event.all
@@ -50,6 +52,7 @@ module App
 
     class Locations < Grape::API
       include Grape::Kaminari
+      desc 'Locations of meetings'
       resource :locations do
         get do
           @locations = paginate Location.all
@@ -60,6 +63,7 @@ module App
 
     class Posts < Grape::API
       include Grape::Kaminari
+      desc 'Positions within organizations'
       resource :posts do
         get do
           @posts = paginate Post.all
@@ -78,6 +82,7 @@ module App
 
     class People < Grape::API
       include Grape::Kaminari
+      desc 'Mayor, councillors and public/private appointees'
       resource :people do
         get do
           @people = paginate Person.all
@@ -114,6 +119,7 @@ module App
 
     class Memberships < Grape::API
       include Grape::Kaminari
+      desc 'Appointed or elected membership terms at posts within organizations'
       resource :memberships do
         get do
           @memberships = paginate Membership.all
@@ -131,6 +137,7 @@ module App
 
     class Bills < Grape::API
       include Grape::Kaminari
+      desc 'Bylaws voted into law by organizations'
       resource :bills do
         get do
           @bills = paginate Bill.all
@@ -162,6 +169,7 @@ module App
       include Grape::Kaminari
       model = :organization
 
+      desc 'City Council, committees, boards, agencies, and corporations'
       resource :organizations do
         get do
           @organizations = Organization.all
@@ -190,6 +198,7 @@ module App
 
     class Votes < Grape::API
       include Grape::Kaminari
+      desc 'Vote event on which a individual vote was held'
       resource :votes do
         get do
           @votes = paginate VoteEvent.all
