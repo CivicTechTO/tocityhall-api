@@ -62,10 +62,6 @@ module App
       expose :people
     end
 
-    class FullOrganizations < Organizations
-      expose :people, using: MinimalPeople
-    end
-
     class Locations < Grape::Entity
       expose :name
       expose :url
@@ -76,11 +72,21 @@ module App
       expose :description
     end
 
+    class EventParticipants < Grape::Entity
+      expose :name, :entity_type, :organization_id, :person_id
+    end
+
     class Events < Grape::Entity
       expose :id do |instance| instance.id.split('/').last end
       expose :name, :description, :start_time, :end_time, :status
       expose :location do |instance| instance.location.name end
       expose :agenda_items, as: :agenda, using: AgendaItems
+      expose :organizations, unless: { root_model: :organization }, using: MinimalOrgs
+    end
+
+    class FullOrganizations < Organizations
+      expose :people, using: MinimalPeople
+      expose :events, using: Events
     end
 
   end

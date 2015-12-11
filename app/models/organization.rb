@@ -7,6 +7,8 @@ class Organization < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Organization'
   belongs_to :membership
+  has_many :event_participants
+  has_many :events, through: :event_participants
 
   def self.find_by_uuid(uuid)
     ocd_uuid = "ocd-organization/#{uuid}"

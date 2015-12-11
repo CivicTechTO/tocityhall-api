@@ -41,7 +41,7 @@ module App
         route_param :id do
           get do
             @event = Event.find_by_uuid(params[:id])
-            present @event
+            present @event, with: App::Entities::Events
           end
         end
       end
@@ -160,6 +160,8 @@ module App
 
     class Organizations < Grape::API
       include Grape::Kaminari
+      model = :organization
+
       resource :organizations do
         get do
           @organizations = Organization.all
@@ -169,7 +171,7 @@ module App
         route_param :id do
           get do
             @organization = Organization.find_by_uuid(params[:id])
-            present @organization, with: App::Entities::FullOrganizations
+            present @organization, with: App::Entities::FullOrganizations, root_model: model
           end
 
           get :people do
@@ -179,7 +181,7 @@ module App
 
           get :events do
             @events = paginate Organization.find_by_uuid(params[:id]).events
-            present @events, with: App::Entities::Events
+            present @events, with: App::Entities::Events, root_model: model
           end
         end
       end
