@@ -23,6 +23,7 @@ class ApiV0 < Grape::API
   mount App::API::People
   mount App::API::Bills
   mount App::API::Votes
+  mount App::API::Locations
 
   add_swagger_documentation mount_path: 'docs',
     base_path: '/v0'

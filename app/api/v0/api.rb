@@ -35,7 +35,7 @@ module App
       resource :events do
         get do
           @events = paginate Event.all
-          present @events
+          present @events, with: App::Entities::Events
         end
 
         route_param :id do
@@ -46,6 +46,16 @@ module App
         end
       end
 
+    end
+
+    class Locations < Grape::API
+      include Grape::Kaminari
+      resource :locations do
+        get do
+          @locations = paginate Location.all
+          present @locations
+        end
+      end
     end
 
     class Posts < Grape::API
@@ -165,6 +175,11 @@ module App
           get :people do
             @people = paginate Organization.find_by_uuid(params[:id]).people
             present @people, with: App::Entities::People
+          end
+
+          get :events do
+            @events = paginate Organization.find_by_uuid(params[:id]).events
+            present @events, with: App::Entities::Events
           end
         end
       end
