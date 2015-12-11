@@ -71,10 +71,16 @@ module App
       expose :url
     end
 
+    class AgendaItems < Grape::Entity
+      expose :order
+      expose :description
+    end
+
     class Events < Grape::Entity
       expose :id do |instance| instance.id.split('/').last end
       expose :name, :description, :start_time, :end_time, :status
       expose :location do |instance| instance.location.name end
+      expose :agenda_items, as: :agenda, using: AgendaItems
     end
 
   end
