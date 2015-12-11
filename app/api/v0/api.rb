@@ -6,8 +6,8 @@ module App
 
     class LegislativeSessions < Grape::API
       include Grape::Kaminari
-      desc 'Four-Year legislative terms of governance'
-      resource :legislative_sessions do
+      desc = { desc: 'Four-Year legislative terms of governance' }
+      resource :legislative_sessions, desc do
         get do
           @sessions = paginate LegislativeSession.all
           present @sessions, with: App::Entities::LegislativeSessions
@@ -34,8 +34,8 @@ module App
 
     class Events < Grape::API
       include Grape::Kaminari
-      desc 'Meetings of organizations or persons'
-      resource :events do
+      desc = { desc: 'Meetings of organizations or persons' }
+      resource :events, desc do
         get do
           @events = paginate Event.all
           present @events, with: App::Entities::Events
@@ -53,8 +53,8 @@ module App
 
     class Locations < Grape::API
       include Grape::Kaminari
-      desc 'Locations of meetings'
-      resource :locations do
+      desc = { desc: 'Locations of meetings' }
+      resource :locations, desc do
         get do
           @locations = paginate Location.all
           present @locations
@@ -64,8 +64,8 @@ module App
 
     class Posts < Grape::API
       include Grape::Kaminari
-      desc 'Positions within organizations'
-      resource :posts do
+      desc = { desc: 'Positions within organizations' }
+      resource :posts, desc do
         get do
           @posts = paginate Post.all
           present @posts, with: App::Entities::Posts
@@ -83,8 +83,8 @@ module App
 
     class People < Grape::API
       include Grape::Kaminari
-      desc 'Mayor, councillors and public/private appointees'
-      resource :people do
+      desc = { desc: 'Mayors, councillors and public/private appointees' }
+      resource :people, desc do
         get do
           @people = paginate Person.all
           present @people, with: App::Entities::People
@@ -120,8 +120,8 @@ module App
 
     class Memberships < Grape::API
       include Grape::Kaminari
-      desc 'Appointed or elected membership terms at posts within organizations'
-      resource :memberships do
+      desc = { desc: 'Elected or appointed terms at organizations' }
+      resource :memberships, desc do
         get do
           @memberships = paginate Membership.all
           present @memberships
@@ -138,8 +138,8 @@ module App
 
     class Bills < Grape::API
       include Grape::Kaminari
-      desc 'Bylaws voted into law by organizations'
-      resource :bills do
+      desc = { desc: 'Bylaws voted into law by organizations' }
+      resource :bills, desc do
         get do
           @bills = paginate Bill.all
           present @bills
@@ -170,8 +170,8 @@ module App
       include Grape::Kaminari
       model = :organization
 
-      desc 'City Council, committees, boards, agencies, and corporations'
-      resource :organizations do
+      desc = { desc: 'Committees, boards, agencies, and corporations' }
+      resource :organizations, desc do
         get do
           @organizations = Organization.all
           present @organizations, with: App::Entities::Organizations
@@ -199,8 +199,8 @@ module App
 
     class Votes < Grape::API
       include Grape::Kaminari
-      desc 'Vote event on which a individual vote was held'
-      resource :votes do
+      desc = { desc: 'Vote event on which a individual vote was held' }
+      resource :votes, desc do
         get do
           @votes = paginate VoteEvent.all
           present @votes

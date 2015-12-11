@@ -27,8 +27,8 @@ class ApiV0 < Grape::API
 
   add_swagger_documentation \
     mount_path: 'docs',
+    hide_documentation_path: true,
+    hide_format: true,
     base_path: '/v0'
-
-
 
 end
