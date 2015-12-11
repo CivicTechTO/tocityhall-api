@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rack', '~> 1.6.0'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'grape'
 gem 'grape-kaminari'
 gem 'grape-entity'
