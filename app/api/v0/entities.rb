@@ -3,6 +3,12 @@ require 'grape'
 module App
   module Entities
 
+    ORG_RELATION_DOCS = {
+      desc: 'Organizations',
+      param_type: 'body',
+      is_array: true,
+    }
+
     class LegislativeSessions < Grape::Entity
       expose :id
       expose :name
@@ -17,13 +23,14 @@ module App
       is_parent = lambda {|instance, options| options[:type] == :parent}
 
       expose :id do |instance| instance.id.split('/').last end
-      expose :name
-      expose :classification
-      expose :jurisdiction_id
-      expose :parent, unless: is_child do |org, options|
+      expose :name, documentation: {type: String, desc: 'A primary name, e.g. a legally recognized name'}
+      expose :classification, documentation: {type: String, desc: 'An organization category, e.g. committee'}
+      expose :jurisdiction_id, documentation: {type: String}
+      # TODO: Figure out docs for this (broken)
+      expose :parent, unless: is_child, documentation: ORG_RELATION_DOCS.merge(is_array:false) do |org, options|
         App::Entities::Organizations.represent org.parent, options.merge(type: :parent)
       end
-      expose :children, unless: is_parent do |org, options|
+      expose :children, unless: is_parent, documentation: ORG_RELATION_DOCS do |org, options|
         App::Entities::Organizations.represent org.children, options.merge(type: :child)
       end
     end
@@ -45,7 +52,8 @@ module App
       expose :id do |instance| instance.id.split('/').last end
       expose :name, documentation: {type: 'string', desc: 'A person’s preferred full name'}
       expose :image, documentation: {type: 'string', desc: 'A URL of a head shot'}
-      expose :organizations do |instance, options|
+      # TODO: Fix. Docs only work with 'using' key, which doesn't fit here...
+      expose :organizations, documentation: ORG_RELATION_DOCS do |instance, options|
         if options[:collection]
           Organizations.represent instance.organizations, only: [:id, :name]
         else

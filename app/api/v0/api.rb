@@ -184,6 +184,8 @@ module App
 
       desc = { desc: 'Committees, boards, agencies, and corporations' }
       resource :organizations, desc do
+
+        desc 'Get all organizations', entity: App::Entities::Organizations
         get do
           @organizations = Organization.all
           present @organizations, with: App::Entities::Organizations
@@ -199,16 +201,19 @@ module App
           }
         end
         route_param :id do
+          desc 'Get a single organization', entity: App::Entities::Organizations
           get do
             @organization = Organization.find_by_uuid(params[:id])
             present @organization, with: App::Entities::FullOrganizations, root_model: model
           end
 
+          desc "Get a single organization's people", entity: App::Entities::People
           get :people do
             @people = paginate Organization.find_by_uuid(params[:id]).people
             present @people, with: App::Entities::People
           end
 
+          desc "Get a single organization's events", entity: App::Entities::Events
           get :events do
             @events = paginate Organization.find_by_uuid(params[:id]).events
             present @events, with: App::Entities::Events, root_model: model
