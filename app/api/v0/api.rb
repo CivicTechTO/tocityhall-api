@@ -1,5 +1,6 @@
 require 'grape'
 require 'grape-swagger'
+require_relative 'entities'
 
 module App
   module API
@@ -85,30 +86,41 @@ module App
       include Grape::Kaminari
       desc = { desc: 'Mayors, councillors and public/private appointees' }
       resource :people, desc do
+
+        desc 'Get all people', entity: App::Entities::People
         get do
           @people = paginate Person.all
           present @people, with: App::Entities::People
         end
 
+        params do
+          requires :id, {
+            type: String,
+            desc: 'Person UUID',
+            documentation: {
+              example: 'cd4dc9d0-61f2-49a1-b2fb-72cb998b34a1',
+            }
+          }
+        end
         route_param :id do
+          desc 'Get a single person', entity: App::Entities::People
           get do
             @person = Person.find_by_uuid(params[:id])
             present @person, with: App::Entities::People
           end
 
+          desc "Get a single person's votes"
           get :votes do
-            Person.find_by_uuid(params[:id]).person_votes.limit(20)
-          end
-
-          get :vote_events do
             Person.find_by_uuid(params[:id]).vote_events.limit(20)
           end
 
+          desc "Get a single person's organizations", entity: App::Entities::Organizations
           get :organizations do
             @organizations = paginate Person.find_by_uuid(params[:id]).organizations
             present @organizations, with: App::Entities::Organizations
           end
 
+          desc "Get a single person's memberships", entity: App::Entities::Memberships
           get :memberships do
             @memberships = paginate Person.find_by_uuid(params[:id]).memberships
             present @memberships
@@ -177,6 +189,15 @@ module App
           present @organizations, with: App::Entities::Organizations
         end
 
+        params do
+          requires :id, {
+            type: String,
+            desc: 'Organization UUID',
+            documentation: {
+              example: 'ca7b373d-8000-47f4-8caa-78ce059ce1af',
+            }
+          }
+        end
         route_param :id do
           get do
             @organization = Organization.find_by_uuid(params[:id])

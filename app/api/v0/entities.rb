@@ -43,11 +43,14 @@ module App
 
     class People < Grape::Entity
       expose :id do |instance| instance.id.split('/').last end
-      expose :name
-      expose :image
-      expose :organizations, unless: :collection, using: MinimalOrgs
-      expose :organizations, if: :collection do |instance|
-        Organizations.represent instance.organizations, only: [:id, :name]
+      expose :name, documentation: {type: 'string', desc: 'A person’s preferred full name'}
+      expose :image, documentation: {type: 'string', desc: 'A URL of a head shot'}
+      expose :organizations do |instance, options|
+        if options[:collection]
+          Organizations.represent instance.organizations, only: [:id, :name]
+        else
+          MinimalOrgs.represent instance.organizations
+        end
       end
       expose :memberships, unless: :collection, using: Memberships
     end
