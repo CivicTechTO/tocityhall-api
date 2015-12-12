@@ -98,7 +98,7 @@ module App
             type: String,
             desc: 'Person UUID',
             documentation: {
-              example: 'cd4dc9d0-61f2-49a1-b2fb-72cb998b34a1',
+              example: '635cfa4f-7c1c-4fa7-86a0-ac53368e7942',
             }
           }
         end
@@ -196,7 +196,7 @@ module App
             type: String,
             desc: 'Organization UUID',
             documentation: {
-              example: 'ca7b373d-8000-47f4-8caa-78ce059ce1af',
+              example: '45abd75a-640b-4069-9eb7-c322a845f2f7',
             }
           }
         end
