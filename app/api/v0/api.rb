@@ -98,7 +98,7 @@ module App
             type: String,
             desc: 'Person UUID',
             documentation: {
-              example: '635cfa4f-7c1c-4fa7-86a0-ac53368e7942',
+              example: ENV['TOCITYHALL_EXAMPLE_UUID_PERSON'],
             }
           }
         end
@@ -196,7 +196,7 @@ module App
             type: String,
             desc: 'Organization UUID',
             documentation: {
-              example: '45abd75a-640b-4069-9eb7-c322a845f2f7',
+              example: ENV['TOCITYHALL_EXAMPLE_UUID_ORG'],
             }
           }
         end
