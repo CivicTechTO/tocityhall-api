@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   has_many :agenda_items
   has_many :event_participants
   has_many :organizations, through: :event_participants
-  #has_many :people, through: :event_participants
+  default_scope { order :start_time }
 
   def self.find_by_uuid(uuid)
     ocd_uuid = "ocd-event/#{uuid}"
