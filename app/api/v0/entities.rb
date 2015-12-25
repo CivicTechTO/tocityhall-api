@@ -78,9 +78,14 @@ module App
       expose :url
     end
 
+    class EventRelatedEntities < Grape::Entity
+      expose :name, :entity_type, :bill_id
+    end
+
     class AgendaItems < Grape::Entity
       expose :order
       expose :description
+      expose :event_related_entities, as: :related_entities, using: EventRelatedEntities
     end
 
     class EventParticipants < Grape::Entity
