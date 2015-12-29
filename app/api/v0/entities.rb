@@ -80,6 +80,9 @@ module App
 
     class EventRelatedEntities < Grape::Entity
       expose :name, :entity_type, :bill_id
+      expose :link do |instance|
+        instance.bill.bill_documents[0].bill_document_links[0].url
+      end
     end
 
     class AgendaItems < Grape::Entity
@@ -97,7 +100,9 @@ module App
       expose :name, :description, :start_time, :end_time, :status
       expose :location do |instance| instance.location.name end
       expose :agenda_items, as: :agenda, using: AgendaItems
-      expose :organizations, unless: { root_model: :organization }, using: MinimalOrgs
+      expose :participants do
+        expose :organizations, using: MinimalOrgs
+      end
     end
 
     class FullOrganizations < Organizations
