@@ -37,12 +37,24 @@ module App
       include Grape::Kaminari
       desc = { desc: 'Meetings of organizations or persons' }
       resource :events, desc do
+
+        desc 'Get all events', entity: App::Entities::Events
         get do
           @events = paginate Event.all
           present @events, with: App::Entities::Events
         end
 
+        params do
+          requires :id, {
+            type: String,
+            desc: 'Event UUID',
+            documentation: {
+              example: ENV['TOCITYHALL_EXAMPLE_UUID_EVENT'],
+            }
+          }
+        end
         route_param :id do
+          desc 'Get a single event', entity: App::Entities::Events
           get do
             @event = Event.find_by_uuid(params[:id])
             present @event, with: App::Entities::Events
