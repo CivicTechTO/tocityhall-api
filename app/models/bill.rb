@@ -5,6 +5,7 @@ class Bill < ActiveRecord::Base
   has_many :person_votes, through: :vote_events
   belongs_to :legislative_session
   has_many :bill_documents
+  has_many :vote_events
 
   def self.find_by_uuid(uuid)
     ocd_uuid = "ocd-bill/#{uuid}"

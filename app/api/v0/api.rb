@@ -164,15 +164,26 @@ module App
       include Grape::Kaminari
       desc = { desc: 'Bylaws voted into law by organizations' }
       resource :bills, desc do
+        desc 'Get all bills', entity: App::Entities::Bills
         get do
           @bills = paginate Bill.all
-          present @bills
+          present @bills, with: App::Entities::Bills
         end
 
+        params do
+          requires :id, {
+            type: String,
+            desc: 'Bill UUID',
+            documentation: {
+              example: ENV['TOCITYHALL_EXAMPLE_UUID_BILL'],
+            }
+          }
+        end
         route_param :id do
+          desc 'Get a single bill', entity: App::Entities::Bills
           get do
             @bill = Bill.find_by_uuid(params[:id])
-            present @bill
+            present @bill, with: App::Entities::Bills
           end
 
           get :vote_events do

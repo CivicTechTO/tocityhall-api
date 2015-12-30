@@ -110,5 +110,10 @@ module App
       expose :events, using: Events
     end
 
+    class Bills < Grape::Entity
+      expose :id, :identifier, :title, :from_organization_id, :legislative_session_id
+      expose :vote_events
+    end
+
   end
 end
