@@ -33,9 +33,9 @@ You should now be able to access the API at
 ### Documentation
 
 This API is [Swagger-compliant](http://swagger.io/getting-started/).
-With the service running, you may view the API docs here:
+With the service running, the base URL will redirect to the docs:
 
-    http://petstore.swagger.io/?url=http://localhost:9292/v0/docs
+    http://localhost:9292/v0
 
 There are 20 results per page, and you may paginate by adding the page
 query string.
@@ -46,17 +46,16 @@ No guarantees of stability while the API is labelled as `v0`.
 
 A relatively up-to-date demo API is running at:
 
-    https://restful-toronto-city-hall-api.herokuapp.com/v0
+    https://tocityhall-api.herokuapp.com/v0
 
 It is using data scraped from my in-progress improvements to the Toronto
 OCD dataset:
 
     https://github.com/patcon/scrapers-ca/tree/toronto-committee-orgs
 
-The Swagger docs can be viewed here (although they are embarrasingly
-broken):
+The Swagger docs can be viewed here:
 
-    http://petstore.swagger.io/?url=https://restful-toronto-city-hall-api.herokuapp.com/v0/docs
+    https://tocityhall-api.herokuapp.com/v0
 
 ### Related Resources
 
