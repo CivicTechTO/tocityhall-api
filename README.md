@@ -69,3 +69,25 @@ consider the more RESTful approach of APIs built on Grape.
   - Current API: http://ocd.datamade.us/jurisdictions/
   - Imago Django app: https://github.com/opencivicdata/imago (powers OCD
     APIs)
+
+# Heroku
+
+### Clean scrape to Heroku database
+
+```
+# Set the local DATABASE_URL envvar to that of the Heroku DB
+heroku config --shell | grep DATABASE_URL | source /dev/stdin
+
+# Get Toronto-specific listing of division IDs, and set envvar for usage
+wget https://gist.githubusercontent.com/patcon/2aecb6dae0a87c405bea/raw/25badea7220d7ddc4c80eb578683d10efce7c086/country-ca-toronto.csv
+OCD_DIVISION_CSV=country-ca-toronto.csv
+
+# WARNING: This will drop all databases in the Heroku app database.
+pupa dbinit --reset ca
+
+# Run all Toronto scrapers, or optionally run specific scrapers
+pupa update ca_on_toronto # [scraper1 scraper2, ...]
+
+# Unset envvars to make sure we're not acting on Heroku DB later
+unset DATABASE_URL OCD_DIVISION_CSV
+```
