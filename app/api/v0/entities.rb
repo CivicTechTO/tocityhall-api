@@ -112,6 +112,7 @@ module App
 
     class Bills < Grape::Entity
       expose :id, :identifier, :title, :from_organization_id, :legislative_session_id
+      expose :organization
       expose :vote_events
     end
 
