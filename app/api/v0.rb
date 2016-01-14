@@ -2,6 +2,12 @@ require_relative 'v0/api'
 require 'grape-swagger'
 
 class ApiV0 < Grape::API
+
+  get do
+    # Redirect base url to Swagger docs
+    redirect "http://petstore.swagger.io/?url=http://#{request.host}:#{request.port}/#{version}/docs"
+  end
+
   content_type :json, 'application/json'
   default_format :json
   formatter :json, PrettyJSON
