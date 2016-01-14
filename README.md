@@ -75,12 +75,16 @@ consider the more RESTful approach of APIs built on Grape.
 ### Clean scrape to Heroku database
 
 ```
+cd path/to/this/app
 # Set the local DATABASE_URL envvar to that of the Heroku DB
 heroku config --shell | grep DATABASE_URL | source /dev/stdin
 
+cd path/to/scrapers-ca
 # Get Toronto-specific listing of division IDs, and set envvar for usage
 wget https://gist.githubusercontent.com/patcon/2aecb6dae0a87c405bea/raw/25badea7220d7ddc4c80eb578683d10efce7c086/country-ca-toronto.csv
 OCD_DIVISION_CSV=country-ca-toronto.csv
+
+export DATABASE_URL OCD_DIVISION_CSV
 
 # WARNING: This will drop all databases in the Heroku app database.
 pupa dbinit --reset ca
