@@ -5,7 +5,7 @@ class ApiV0 < Grape::API
 
   get do
     # Redirect base url to Swagger docs
-    redirect "http://petstore.swagger.io/?url=http://#{request.host}:#{request.port}/#{version}/docs"
+    redirect "http://petstore.swagger.io/?url=#{request.scheme}://#{request.host_with_port}/#{version}/docs"
   end
 
   content_type :json, 'application/json'
