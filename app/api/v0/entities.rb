@@ -105,6 +105,11 @@ module App
       end
     end
 
+    class AgendaItems < Grape::Entity
+      expose :id, :description, :order, :subjects, :notes
+      expose :event
+    end
+
     class FullOrganizations < Organizations
       expose :people, using: MinimalPeople
       expose :events, using: Events

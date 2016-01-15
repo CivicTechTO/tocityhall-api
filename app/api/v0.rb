@@ -25,6 +25,7 @@ class ApiV0 < Grape::API
   mount App::API::Organizations
   mount App::API::Posts
   mount App::API::Events
+  mount App::API::AgendaItems
   mount App::API::Memberships
   mount App::API::People
   mount App::API::Bills

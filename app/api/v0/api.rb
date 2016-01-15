@@ -64,6 +64,21 @@ module App
 
     end
 
+    class AgendaItems < Grape::API
+      include Grape::Kaminari
+      desc = { desc: 'Items on meeting agendas' }
+      resource :agenda_items, desc do
+
+        desc 'Get all agenda items', entity: App::Entities::AgendaItems
+        get do
+          @agenda_items = paginate AgendaItem.all_by_event_time
+          present @agenda_items, with: App::Entities::AgendaItems
+        end
+      end
+
+    end
+
+
     class Locations < Grape::API
       include Grape::Kaminari
       desc = { desc: 'Locations of meetings' }
