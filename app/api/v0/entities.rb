@@ -69,8 +69,7 @@ module App
 
     class Posts < Grape::Entity
       expose :id do |instance| instance.id.split('/').last end
-      expose :role
-      expose :people
+      expose :role, :people, :label, :extras
     end
 
     class Locations < Grape::Entity
