@@ -61,6 +61,9 @@ module App
         end
       end
       expose :memberships, unless: :collection, using: Memberships
+      expose :division do |instance|
+        instance.posts.joins(:organization).find_by("opencivicdata_organization.name = 'Toronto City Council'").division
+      end
     end
 
     class MinimalPeople < People
