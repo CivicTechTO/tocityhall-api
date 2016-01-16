@@ -98,7 +98,8 @@ unset DATABASE_URL OCD_DIVISION_CSV
 
 ## Deployment
 
-We are using Heroku Pipelines for deployment.
+We are using [Heroku
+Pipelines](https://devcenter.heroku.com/articles/pipelines) for deployment.
 
 ![Heroku Pipeline screenshot](https://imgur.com/8KGbCbM.png)
 
