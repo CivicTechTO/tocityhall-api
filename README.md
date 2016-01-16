@@ -95,3 +95,27 @@ pupa update ca_on_toronto # [scraper1 scraper2, ...]
 # Unset envvars to make sure we're not acting on Heroku DB later
 unset DATABASE_URL OCD_DIVISION_CSV
 ```
+
+## Deployment
+
+We are using [Heroku
+Pipelines](https://devcenter.heroku.com/articles/pipelines) for deployment.
+
+![Heroku Pipeline screenshot](https://imgur.com/8KGbCbM.png)
+
+This means:
+
+* Code is auto-deployed from `master` to the [**staging
+  app**](https://tocityhall-api-staging.herokuapp.com/v0).
+* Code is promoted on-demand from the **staging app** to the [**production
+  app**](https://tocityhall-api.herokuapp.com/v0).
+* Staging and production have their own databases.
+* **Review apps** are automatically created for each pull request from a
+  branch in the main repo (ie. not forks). These apps are connected to
+the staging database.
+[[Example]](https://github.com/patcon/tocityhall-api/pull/6)
+
+### Contributors
+
+See the [contributors
+graph](https://github.com/patcon/tocityhall-api/graphs/contributors).
