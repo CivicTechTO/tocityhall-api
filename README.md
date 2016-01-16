@@ -104,12 +104,12 @@ We are using Heroku Pipelines for deployment.
 
 This means:
 
-* Code is auto-deployed from `master` to the [*staging
-  app*](https://tocityhall-api-staging.herokuapp.com/v0).
-* Code is promoted on-demand from the *staging app* to the [*production
-  app*](https://tocityhall-api.herokuapp.com/v0).
+* Code is auto-deployed from `master` to the [**staging
+  app**](https://tocityhall-api-staging.herokuapp.com/v0).
+* Code is promoted on-demand from the **staging app** to the [**production
+  app**](https://tocityhall-api.herokuapp.com/v0).
 * Staging and production have their own databases.
-* *Review apps* are created for each pull request (linked inline), and
+* **Review apps** are created for each pull request (linked inline), and
   connected to the staging database.
 
 ### Contributors
