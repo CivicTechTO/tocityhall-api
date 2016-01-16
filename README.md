@@ -110,8 +110,9 @@ This means:
 * Code is promoted on-demand from the **staging app** to the [**production
   app**](https://tocityhall-api.herokuapp.com/v0).
 * Staging and production have their own databases.
-* **Review apps** are created for each pull request (linked inline), and
-  connected to the staging database.
+* **Review apps** are automatically created for each pull request from a
+  branch in the main repo (ie. not forks). These apps are connected to
+the staging database.
 
 ### Contributors
 
