@@ -95,3 +95,8 @@ pupa update ca_on_toronto # [scraper1 scraper2, ...]
 # Unset envvars to make sure we're not acting on Heroku DB later
 unset DATABASE_URL OCD_DIVISION_CSV
 ```
+
+### Contributors
+
+See the [contributors
+graph](https://github.com/patcon/tocityhall-api/graphs/contributors).
