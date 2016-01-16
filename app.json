@@ -1,0 +1,26 @@
+{
+  "name": "tocityhall-api",
+  "description": "A Ruby/Grape-based API for Toronto City Hall",
+  "scripts": {
+  },
+  "env": {
+    "LANG": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "TOCITYHALL_EXAMPLE_UUID_EVENT": {
+      "required": true
+    },
+    "TOCITYHALL_EXAMPLE_UUID_ORG": {
+      "required": true
+    },
+    "TOCITYHALL_EXAMPLE_UUID_PERSON": {
+      "required": true
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ]
+}
