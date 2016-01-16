@@ -113,6 +113,7 @@ This means:
 * **Review apps** are automatically created for each pull request from a
   branch in the main repo (ie. not forks). These apps are connected to
 the staging database.
+[[Example]](https://github.com/patcon/tocityhall-api/pull/6)
 
 ### Contributors
 
