@@ -38,6 +38,7 @@ class ApiV0 < Grape::API
     mount_path: swagger_path,
     hide_documentation_path: true,
     hide_format: true,
-    base_path: '/v0'
+    api_version: 'v0',
+    base_path: 'v0'
 
 end
