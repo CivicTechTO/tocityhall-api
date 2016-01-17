@@ -38,7 +38,7 @@ module App
       desc = { desc: 'Meetings of organizations or persons' }
       resource :events, desc do
 
-        desc 'Get all events', entity: App::Entities::Events
+        desc 'Get all events', entity: App::Entities::Events, nickname: 'getAllEvents'
         get do
           @events = paginate Event.all
           present @events, with: App::Entities::Events
@@ -54,7 +54,7 @@ module App
           }
         end
         route_param :id do
-          desc 'Get a single event', entity: App::Entities::Events
+          desc 'Get a single event', entity: App::Entities::Events, nickname: 'getEventById'
           get do
             @event = Event.find_by_uuid(params[:id])
             present @event, with: App::Entities::Events
@@ -69,7 +69,7 @@ module App
       desc = { desc: 'Items on meeting agendas' }
       resource :agenda_items, desc do
 
-        desc 'Get all agenda items', entity: App::Entities::AgendaItems
+        desc 'Get all agenda items', entity: App::Entities::AgendaItems, nickname: 'getAllAgendaItems'
         get do
           @agenda_items = paginate AgendaItem.all_by_event_time
           present @agenda_items, with: App::Entities::AgendaItems
@@ -94,12 +94,15 @@ module App
       include Grape::Kaminari
       desc = { desc: 'Positions within organizations' }
       resource :posts, desc do
+
+        desc 'Get all posts', entity: App::Entities::Posts, nickname: 'getAllPosts'
         get do
           @posts = paginate Post.all
           present @posts, with: App::Entities::Posts
         end
 
         route_param :id do
+          desc 'Get a single post', entity: App::Entities::Posts, nickname: 'getPostById'
           get do
             @post = Post.find_by_uuid(params[:id])
             present @post, with: App::Entities::Posts
@@ -114,7 +117,7 @@ module App
       desc = { desc: 'Mayors, councillors and public/private appointees' }
       resource :people, desc do
 
-        desc 'Get all people', entity: App::Entities::People
+        desc 'Get all people', entity: App::Entities::People, nickname: 'getAllPeople'
         get do
           @people = paginate Person.all
           present @people, with: App::Entities::People
@@ -130,7 +133,7 @@ module App
           }
         end
         route_param :id do
-          desc 'Get a single person', entity: App::Entities::People
+          desc 'Get a single person', entity: App::Entities::People, nickname: 'getPersonById'
           get do
             @person = Person.find_by_uuid(params[:id])
             present @person, with: App::Entities::People
@@ -179,7 +182,7 @@ module App
       include Grape::Kaminari
       desc = { desc: 'Bylaws voted into law by organizations' }
       resource :bills, desc do
-        desc 'Get all bills', entity: App::Entities::Bills
+        desc 'Get all bills', entity: App::Entities::Bills, nickname: 'getAllBills'
         get do
           @bills = paginate Bill.all
           present @bills, with: App::Entities::Bills
@@ -195,7 +198,7 @@ module App
           }
         end
         route_param :id do
-          desc 'Get a single bill', entity: App::Entities::Bills
+          desc 'Get a single bill', entity: App::Entities::Bills, nickname: 'getBillById'
           get do
             @bill = Bill.find_by_uuid(params[:id])
             present @bill, with: App::Entities::Bills
@@ -223,7 +226,7 @@ module App
       desc = { desc: 'Committees, boards, agencies, and corporations' }
       resource :organizations, desc do
 
-        desc 'Get all organizations', entity: App::Entities::Organizations
+        desc 'Get all organizations', entity: App::Entities::Organizations, nickname: 'getAllOrganizations'
         get do
           @organizations = Organization.all
           present @organizations, with: App::Entities::Organizations
@@ -239,7 +242,7 @@ module App
           }
         end
         route_param :id do
-          desc 'Get a single organization', entity: App::Entities::Organizations
+          desc 'Get a single organization', entity: App::Entities::Organizations, nickname: 'getOrganizationById'
           get do
             @organization = Organization.find_by_uuid(params[:id])
             present @organization, with: App::Entities::FullOrganizations, root_model: model
