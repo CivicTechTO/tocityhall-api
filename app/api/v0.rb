@@ -3,9 +3,11 @@ require 'grape-swagger'
 
 class ApiV0 < Grape::API
 
+  swagger_path = 'swagger'
+
   get do
     # Redirect base url to Swagger docs
-    redirect "http://petstore.swagger.io/?url=#{request.scheme}://#{request.host_with_port}/#{version}/docs"
+    redirect "http://petstore.swagger.io/?url=#{request.scheme}://#{request.host_with_port}/#{version}/#{swagger_path}"
   end
 
   content_type :json, 'application/json'
@@ -33,7 +35,7 @@ class ApiV0 < Grape::API
   mount App::API::Locations
 
   add_swagger_documentation \
-    mount_path: 'docs',
+    mount_path: swagger_path,
     hide_documentation_path: true,
     hide_format: true,
     base_path: '/v0'
