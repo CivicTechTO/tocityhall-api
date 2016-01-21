@@ -71,7 +71,13 @@ module App
 
         desc 'Get all agenda items', entity: App::Entities::AgendaItems, nickname: 'getAllAgendaItems'
         get do
-          @agenda_items = paginate AgendaItem.all_by_event_time
+          @agenda_items = paginate AgendaItem.all
+          present @agenda_items, with: App::Entities::AgendaItems
+        end
+
+        desc 'Get all upcoming agenda items', entity: App::Entities::AgendaItems, nickname: 'getAllUpcomingAgendaItems'
+        get :upcoming do
+          @agenda_items = paginate AgendaItem.upcoming
           present @agenda_items, with: App::Entities::AgendaItems
         end
       end
