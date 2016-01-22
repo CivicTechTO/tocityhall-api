@@ -80,6 +80,12 @@ module App
           @agenda_items = paginate AgendaItem.upcoming
           present @agenda_items, with: App::Entities::AgendaItems
         end
+
+        desc 'Get all latest agenda items', entity: App::Entities::AgendaItems, nickname: 'getAllLatestAgendaItems'
+        get :latest do
+          @agenda_items = paginate AgendaItem.latest
+          present @agenda_items, with: App::Entities::AgendaItems
+        end
       end
 
     end

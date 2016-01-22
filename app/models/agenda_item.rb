@@ -7,4 +7,9 @@ class AgendaItem < ActiveRecord::Base
   def self.upcoming
     self.all.where('opencivicdata_event.start_time > ?', Time.now)
   end
+
+  def self.latest
+    # Approximates latest by assuming furthest ahead are latest :/
+    self.all.reorder('opencivicdata_event.start_time DESC').order('opencivicdata_eventagendaitem.order::int')
+  end
 end
