@@ -9,11 +9,11 @@ class AgendaItem < ActiveRecord::Base
   end
 
   def self.upcoming
-    self.votable.where('opencivicdata_event.start_time > ?', Time.now)
+    self.where('opencivicdata_event.start_time > ?', Time.now)
   end
 
   def self.latest
     # Approximates latest by assuming furthest ahead are latest :/
-    self.votable.reorder('opencivicdata_event.start_time DESC').order('opencivicdata_eventagendaitem.order::int')
+    self.reorder('opencivicdata_event.start_time DESC').order('opencivicdata_eventagendaitem.order::int')
   end
 end
