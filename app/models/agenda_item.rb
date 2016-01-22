@@ -4,12 +4,16 @@ class AgendaItem < ActiveRecord::Base
   belongs_to :event
   has_many :event_related_entities
 
+  def self.votable
+    self.where.contains(subjects: ['ACTION'])
+  end
+
   def self.upcoming
-    self.all.where('opencivicdata_event.start_time > ?', Time.now)
+    self.votable.where('opencivicdata_event.start_time > ?', Time.now)
   end
 
   def self.latest
     # Approximates latest by assuming furthest ahead are latest :/
-    self.all.reorder('opencivicdata_event.start_time DESC').order('opencivicdata_eventagendaitem.order::int')
+    self.votable.reorder('opencivicdata_event.start_time DESC').order('opencivicdata_eventagendaitem.order::int')
   end
 end

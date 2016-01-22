@@ -80,6 +80,11 @@ GEM
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
     pg (0.18.4)
+    pg_array_parser (0.0.9)
+    postgres_ext (2.4.1)
+      activerecord (>= 4.0.0)
+      arel (>= 4.0.1)
+      pg_array_parser (~> 0.0.9)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -117,6 +122,7 @@ DEPENDENCIES
   grape-kaminari
   grape-swagger
   pg
+  postgres_ext
   rack (~> 1.6.0)
   rack-cors
   rake
