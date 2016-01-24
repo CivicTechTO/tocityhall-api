@@ -12,4 +12,8 @@ gem 'activerecord', '~> 4.2.0', require: 'active_record'
 gem 'grape-activerecord'
 gem 'pg'
 gem 'postgres_ext'
-gem 'rake'
+
+group :development do
+  gem 'rake'
+  gem 'dotenv'
+end

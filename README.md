@@ -115,6 +115,14 @@ This means:
 the staging database.
 [[Example]](https://github.com/patcon/tocityhall-api/pull/6)
 
+The above process only migrates code. To migrate the database from
+staging to production:
+
+    bundle exec rake tocityhall:migrate_stage_to_prod
+
+**Warning:** This is a destructive action on production database. It
+will prompt for confirmation.
+
 ### Contributors
 
 See the [contributors
