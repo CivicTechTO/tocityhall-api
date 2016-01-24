@@ -5,7 +5,7 @@ class AgendaItem < ActiveRecord::Base
   has_many :event_related_entities
 
   def self.votable
-    self.where.contains(subjects: ['ACTION'])
+    self.where.contains(classification: ['action'])
   end
 
   def self.upcoming

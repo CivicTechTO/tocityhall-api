@@ -95,6 +95,8 @@ module App
     class AgendaItems < Grape::Entity
       expose :order
       expose :description
+      expose :subjects
+      expose :classification
       expose :event_related_entities, as: :related_entities, using: EventRelatedEntities
     end
 
