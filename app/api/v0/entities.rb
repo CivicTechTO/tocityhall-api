@@ -88,8 +88,8 @@ module App
     class EventRelatedEntities < Grape::Entity
       expose :name, :entity_type, :bill_id
       expose :link do |instance|
-        if instance.bill
-          instance.bill.bill_documents[0].bill_document_links[0].url
+        if instance.bill and not instance.bill.bill_documents.empty?
+          doc = instance.bill.bill_documents[0].bill_document_links[0].url
         end
       end
     end
