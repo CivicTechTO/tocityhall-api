@@ -100,6 +100,7 @@ module App
       expose :subjects
       expose :classification
       expose :event_related_entities, as: :related_entities, using: EventRelatedEntities
+      expose :bill
     end
 
     class EventParticipants < Grape::Entity

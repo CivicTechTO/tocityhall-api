@@ -8,6 +8,10 @@ class AgendaItem < ActiveRecord::Base
   belongs_to :event
   has_many :event_related_entities
 
+  def bill
+    self.event_related_entities[0]
+  end
+
   def self.votable
     self.where.contains(classification: ['action'])
   end
